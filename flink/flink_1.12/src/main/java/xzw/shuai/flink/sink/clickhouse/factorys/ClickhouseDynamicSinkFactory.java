@@ -1,4 +1,4 @@
-package xzw.shuai.flink.sink.clickhouse.demo;
+package xzw.shuai.flink.sink.clickhouse.factorys;
 
 import org.apache.flink.configuration.ConfigOption;
 import org.apache.flink.configuration.ReadableConfig;
@@ -17,12 +17,16 @@ import java.util.Set;
 import static xzw.shuai.flink.sink.clickhouse.options.SinkOptions.*;
 
 /**
+ * spi方式加载此类
+ *
  * @author xuzhiwen
  */
 public class ClickhouseDynamicSinkFactory implements DynamicTableSourceFactory, DynamicTableSinkFactory {
 
     private static final String IDENTIFIER = "xzw_ck";
 
+    public ClickhouseDynamicSinkFactory() {
+    }
 
     @Override
     public DynamicTableSink createDynamicTableSink(Context context) {

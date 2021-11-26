@@ -1,4 +1,4 @@
-package xzw.shuai.flink.sink.clickhouse.demo;
+package xzw.shuai.flink.sink.clickhouse.factorys;
 
 import org.apache.flink.table.connector.source.DynamicTableSource;
 
