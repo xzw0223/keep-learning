@@ -1,4 +1,4 @@
-package xzw.shuai.netty;
+package xzw.shuai.netty.study;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
