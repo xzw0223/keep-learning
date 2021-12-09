@@ -1,7 +1,8 @@
-package xzw.shuai.netty.bound;
+package xzw.shuai.sgg.netty.tcp;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
@@ -9,11 +10,12 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.ByteToMessageDecoder;
+import io.netty.util.CharsetUtil;
 
-import java.util.List;
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
-public class MyBoundServer {
+public class MyTcpServer {
     public static void main(String[] args) {
         NioEventLoopGroup bossGroup = new NioEventLoopGroup(1);
         NioEventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -21,7 +23,7 @@ public class MyBoundServer {
         ServerBootstrap bootstrap = new ServerBootstrap()
                 .group(bossGroup, workerGroup)
                 .channel(NioServerSocketChannel.class)
-                .childHandler(new MyServerBoundHandler());
+                .childHandler(new MyServerTcpHandler());
 
         try {
             ChannelFuture channelFuture = bootstrap.bind(11111).sync();
@@ -36,41 +38,32 @@ public class MyBoundServer {
     }
 
 
-    static class MyServerBoundHandler extends ChannelInitializer<SocketChannel> {
+    static class MyServerTcpHandler extends ChannelInitializer<SocketChannel> {
         @Override
         protected void initChannel(SocketChannel ch) throws Exception {
             ch.pipeline()
-                    // 出站(inbound) 进行解码
-                    .addLast(new MyByteToLongDecoder())
-                    .addLast(new MyBoundClinet.MyLongToByteEncoder())
                     .addLast(new MyServerHandler());
         }
     }
 
-    static class MyByteToLongDecoder extends ByteToMessageDecoder {
+
+    static class MyServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
+        int count = 0;
+
         @Override
-        protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+        protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
+            byte[] data = new byte[msg.readableBytes()];
+            msg.readBytes(data);
+            System.out.println("server msg = " + new String(data, StandardCharsets.UTF_8) + "   count" + ++count);
 
-            System.out.println(this.getClass().getSimpleName() + "decode被调用");
-
-            // 判断如果有8个字节才处理
-            if (in.readableBytes() >= 8) {
-                out.add(in.readLong());
-            }
-        }
-    }
-
-    static class MyServerHandler extends SimpleChannelInboundHandler<Long> {
-        @Override
-        protected void channelRead0(ChannelHandlerContext ctx, Long msg) throws Exception {
-            long r =2048;
-            System.out.println(ctx.channel().remoteAddress() + " 读取数据 " + msg + " 并返回一个 " + r);
-
-            ctx.writeAndFlush(r);
+            // 返回一个随机结果
+            ByteBuf rMsg = Unpooled.copiedBuffer(UUID.randomUUID().toString()+"   ", CharsetUtil.UTF_8);
+            ctx.writeAndFlush(rMsg);
         }
 
         @Override
         public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+            cause.printStackTrace();
             ctx.close();
         }
     }

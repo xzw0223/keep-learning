@@ -1,4 +1,4 @@
-package xzw.shuai.netty.http.websocket;
+package xzw.shuai.sgg.netty.http.websocket;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

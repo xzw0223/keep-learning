@@ -1,4 +1,4 @@
-package xzw.shuai.netty.study;
+package xzw.shuai.sgg.netty.study;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -38,6 +38,7 @@ public class NettyClient {
         try {
             ChannelFuture channelFuture = bootstrap.connect("localhost", 6666)
                     .sync();
+            System.out.println("奥术大师大所");
             ChannelFuture closeFuture = channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();

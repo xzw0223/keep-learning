@@ -1,4 +1,4 @@
-package xzw.shuai.netty.demo;
+package xzw.shuai.sgg.netty.demo;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;

@@ -1,4 +1,4 @@
-package xzw.shuai.netty.buffer;
+package xzw.shuai.sgg.netty.buffer;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

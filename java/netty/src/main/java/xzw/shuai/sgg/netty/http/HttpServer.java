@@ -1,4 +1,4 @@
-package xzw.shuai.netty.http;
+package xzw.shuai.sgg.netty.http;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
