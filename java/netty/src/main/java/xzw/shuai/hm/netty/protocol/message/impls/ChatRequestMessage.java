@@ -1,11 +1,43 @@
 package xzw.shuai.hm.netty.protocol.message.impls;
 
 
+import lombok.EqualsAndHashCode;
 import xzw.shuai.hm.netty.protocol.message.Message;
+import lombok.Data;
+import lombok.ToString;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
+@ToString(callSuper = true)
 public class ChatRequestMessage extends Message {
     private String content;
     private String to;
+
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
     private String from;
 
     public ChatRequestMessage() {
@@ -22,12 +54,4 @@ public class ChatRequestMessage extends Message {
         return ChatRequestMessage;
     }
 
-    @Override
-    public String toString() {
-        return "ChatRequestMessage{" +
-                "content='" + content + '\'' +
-                ", to='" + to + '\'' +
-                ", from='" + from + '\'' +
-                '}';
-    }
 }

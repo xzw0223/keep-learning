@@ -8,7 +8,11 @@ import xzw.shuai.hm.netty.protocol.message.rpc.RpcResponseMessage;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.Data;
+import lombok.ToString;
 
+@Data
+@ToString(callSuper = true)
 public abstract class Message implements Serializable {
     public int getSequenceId() {
         return sequenceId;
@@ -27,6 +31,7 @@ public abstract class Message implements Serializable {
     }
 
     private int sequenceId;
+
 
     private int messageType;
 
