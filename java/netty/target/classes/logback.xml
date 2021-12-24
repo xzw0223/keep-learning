@@ -38,14 +38,14 @@
 
     <!-- 用来控制查看那个类的日志内容（对mybatis name 代表命名空间） -->
     <!--单独指定某个包 进行日志输出 （这里 coma 就是不想 启动 netty debug打印）-->
-    <logger name="com" level="DEBUG" additivity="false"> <!--additivity =【true：反馈到<root 里面打印或者写出日志，false：不反馈】-->
+    <logger name="xzw" level="DEBUG" additivity="false"> <!--additivity =【true：反馈到<root 里面打印或者写出日志，false：不反馈】-->
         <appender-ref ref="STDOUT"/>
     </logger>
     <logger name="io.netty.handler.logging.LoggingHandler" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <root level="ERROR">  <!--只有什么 状态的 时候 才输出 -->
-        <appender-ref ref="STDOUT1"/>
-    </root>
+<!--    <root level="ERROR">  &lt;!&ndash;只有什么 状态的 时候 才输出 &ndash;&gt;-->
+<!--        <appender-ref ref="STDOUT1"/>-->
+<!--    </root>-->
 </configuration>
