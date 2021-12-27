@@ -5,13 +5,15 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageCodec;
 import xzw.shuai.hm.netty.chatgroup.message.Message;
+import xzw.shuai.hm.utils.ConfigUtil;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.List;
 
 /**
  * 可共享的
- *  必须保证没有粘包拆包问题
+ * 必须保证没有粘包拆包问题
+ *
  * @author xuzhiwen
  */
 @ChannelHandler.Sharable
@@ -37,8 +39,8 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message
         outBuf.writeBytes(new byte[]{'x', 'z', 'w', 's'});
         //         1b
         outBuf.writeByte(currentVersion);
-        // 序列化方式  0 jdk 1 json   1b
-        outBuf.writeByte(0);
+        // 序列化方式 1b
+        outBuf.writeByte(ConfigUtil.getSerializerAlgorithm().ordinal());
         // 指令类型    1b
         outBuf.writeByte(msg.getMessageType());
         // 请求序号    4b
@@ -56,7 +58,7 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message
     }
 
     private byte[] serializeMessage(Message msg) throws IOException {
-        return Serializer.Algorithm.Java.serialize(msg);
+        return ConfigUtil.getSerializerAlgorithm().serialize(msg);
     }
 
     @Override
@@ -69,7 +71,7 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message
         // 获取版本
         byte version = in.readByte();
         // 序列化类型
-        byte serializeType = in.readByte();
+        byte serializeAlgorithm = in.readByte();
 
         byte messageType = in.readByte();
         int sequenceId = in.readInt();
@@ -81,10 +83,14 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message
         byte[] messageByte = new byte[length];
         in.readBytes(messageByte);
 
-        // 判断序列化类型,根据不同的类型进行序列化
-        Message message = Serializer.Algorithm.Java.deserialize(Message.class, messageByte);
 
-        System.out.println(magicNum + " " + version + " " + serializeType + " " + messageType + " " +
+
+        // 判断序列化类型,根据不同的类型进行序列化
+        Object message = Serializer.Algorithm
+                .values()[serializeAlgorithm]
+                .deserialize(Message.getMessageClass(messageType), messageByte);
+
+        System.out.println(magicNum + " " + version + " " + serializeAlgorithm + " " + messageType + " " +
                 sequenceId + " " + length + " " + message);
 
 

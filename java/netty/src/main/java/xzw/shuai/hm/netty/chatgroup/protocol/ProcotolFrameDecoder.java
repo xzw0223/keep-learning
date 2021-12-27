@@ -1,5 +1,6 @@
 package xzw.shuai.hm.netty.chatgroup.protocol;
 
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
 public class ProcotolFrameDecoder extends LengthFieldBasedFrameDecoder {

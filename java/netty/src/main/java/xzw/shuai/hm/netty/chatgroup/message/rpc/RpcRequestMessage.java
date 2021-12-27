@@ -1,7 +1,9 @@
 package xzw.shuai.hm.netty.chatgroup.message.rpc;
 
+import lombok.Data;
 import xzw.shuai.hm.netty.chatgroup.message.Message;
 
+@Data
 public class RpcRequestMessage extends Message {
 
     /**
