@@ -68,13 +68,6 @@
             <artifactId>guava</artifactId>
             <version>19.0</version>
         </dependency>
-        <!--日志打印和输出的-->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
-        </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

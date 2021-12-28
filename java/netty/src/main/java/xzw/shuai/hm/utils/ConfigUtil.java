@@ -1,6 +1,6 @@
 package xzw.shuai.hm.utils;
 
-import xzw.shuai.hm.netty.chatgroup.protocol.Serializer;
+import xzw.shuai.hm.nio.netty.chatgroup.protocol.Serializer;
 
 import java.io.IOException;
 import java.io.InputStream;
