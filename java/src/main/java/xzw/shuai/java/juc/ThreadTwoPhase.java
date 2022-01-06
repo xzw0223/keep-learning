@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class ThreadTest {
+public class ThreadTwoPhase {
     static int i = 0;
 
     public static void main(String[] args) throws Exception {
@@ -19,7 +19,6 @@ public class ThreadTest {
     public static void test2()  {
         TwoPhaseTermination tpt = new TwoPhaseTermination();
         tpt.start();
-
         sleep(3);
         tpt.stop();
     }
@@ -66,7 +65,6 @@ public class ThreadTest {
 
               }
           });
-
           monitor.start();
       }
       public void stop(){
